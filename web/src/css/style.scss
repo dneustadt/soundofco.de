@@ -288,6 +288,9 @@ input[type=range] {
       -webkit-appearance: none;
       -webkit-border-radius: 0px;
       max-width: 100px;
+      &:focus {
+        background-image: none;
+      }
     }
   }
   .slider {
