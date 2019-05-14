@@ -35,21 +35,24 @@ var optionKeys = {
                 return;
             }
 
-            var codeScroll = document.getElementById('codescroll'),
+            var self = this,
+                codeScroll = document.getElementById('codescroll'),
                 waveformNeedle = document.getElementById('waveform-needle'),
-                currentLine = codeScroll.children[this.currentNote];
+                currentLine = codeScroll.children[self.currentNote];
 
             if (currentLine === undefined) {
                 return;
             }
 
-            if ((currentLine.offsetTop - codeScroll.offsetTop) > (codeScroll.offsetHeight / 2) + codeScroll.scrollTop) {
-                var scrollDiff = currentLine.offsetTop - (codeScroll.offsetHeight / 2 + codeScroll.scrollTop),
-                    scrollAmount = 0,
-                    slideTimer = setInterval(function(){
+            if (currentLine.offsetTop - codeScroll.offsetTop >= codeScroll.offsetHeight / 2 + codeScroll.scrollTop) {
+                var slideTimer = setInterval(function () {
                         codeScroll.scrollTop += 10;
-                        scrollAmount += 10;
-                        if(scrollAmount >= scrollDiff){
+
+                        var scrollAmount = 50,
+                            offsetTop = currentLine.offsetTop - codeScroll.offsetTop,
+                            scrollTop = codeScroll.offsetHeight / 2 + codeScroll.scrollTop - scrollAmount;
+
+                        if (offsetTop < scrollTop || !self.isPlaying) {
                             window.clearInterval(slideTimer);
                         }
                     }, 10);
