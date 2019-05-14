@@ -1670,6 +1670,8 @@ var optionKeys = {
             if (event) {
                 event.preventDefault();
 
+                this.back();
+
                 var form = event.target.closest('form'),
                     formData = new FormData(form),
                     src = form.getAttribute('action');
@@ -1693,6 +1695,7 @@ var optionKeys = {
                         this.isLoading = false;
                     } else {
                         this.isLoading = false;
+                        this.tree = undefined;
                         simpleNotify.notify({message: response.body.message, level: 'warning', notificationTime: 3000});
                     }
                 });
@@ -1740,13 +1743,13 @@ var optionKeys = {
                     }
                 });
         },
-        back: function () {
+        back: function (event) {
             if (this.isPlaying) {
                 this.currentNote = this.notes.length;
                 this.isPlaying = false;
             }
 
-            if (this.tree === undefined && this.owner && this.repo) {
+            if (event && this.tree === undefined && this.owner && this.repo) {
                 var formData = new FormData();
                 formData.append('owner', this.owner);
                 formData.append('repo', this.repo);
