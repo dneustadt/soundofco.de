@@ -224,7 +224,8 @@ input[type=range] {
 }
 
 #tree {
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   border-top: 1px solid #000;
   div {
     span {
@@ -240,6 +241,8 @@ input[type=range] {
         color: $color-primary;
       }
     }
+    overflow: hidden;
+    white-space: nowrap;
     &:nth-child(odd) {
       background: lighten(#1d1d1d, 3%);
     }

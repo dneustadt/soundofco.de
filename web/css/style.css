@@ -820,8 +820,14 @@ input[type=range]::-moz-range-thumb {
 }
 
 #tree {
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   border-top: 1px solid #000;
+}
+
+#tree div {
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 #tree div span {
