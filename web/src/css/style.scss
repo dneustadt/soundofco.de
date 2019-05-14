@@ -204,6 +204,7 @@ input[type=range] {
   overflow: hidden;
   .column {
     height: 100%;
+    max-height: calc(100vh - 250px);
     pre {
       height: 100%;
       overflow: auto;
