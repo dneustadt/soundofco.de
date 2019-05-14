@@ -1,0 +1,383 @@
+$color-initial: #fff !default
+$color-primary: #d93c33 !default
+$color-secondary: #606c76 !default
+$color-tertiary: #f4f5f6 !default
+$color-quaternary: #d1d1d1 !default
+$color-quinary: #e1e1e1 !default
+
+@import "../../../node_modules/milligram/src/milligram.sass";
+
+/* Include this stylesheet after Milligram or merge it with your main.css */
+
+*::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 10px;
+  background-color: #1d1d1d;
+}
+
+*::-webkit-scrollbar
+{
+  width: 12px;
+  background-color: #1d1d1d;
+}
+
+*::-webkit-scrollbar-thumb
+{
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #555;
+}
+
+@font-face {
+  font-family: 'monobono';
+  src: url('../fonts/monobono.eot');
+  src: url('../fonts/monobono.eot?#iefix') format('embedded-opentype'),
+  url('../fonts/monobono.woff2') format('woff2'),
+  url('../fonts/monobono.woff') format('woff'),
+  url('../fonts/monobono.ttf') format('truetype'),
+  url('../fonts/monobono.svg#monobono') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'monobono', 'Roboto','Helvetica Neue','Helvetica','Arial',sans-serif;
+  margin: 0;
+}
+
+h1 {
+  font-size: 90px;
+  line-height: 60px;
+  padding-top: 20px;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  background: #1d1d1d;
+  color: #eee;
+}
+
+.color {
+  &--primary {
+    color: $color-primary;
+  }
+  &--primary-light {
+    color: lighten($color-primary, 20%);
+  }
+}
+
+.button,
+button,
+input[type=button],
+input[type=reset],
+input[type=submit] {
+  border: 0;
+  border-radius: 0;
+  text-transform: none;
+  font-size: 12px;
+  font-weight: normal;
+  padding: 0 1.5rem;
+}
+
+input[type=email],
+input[type=number],
+input[type=password],
+input[type=search],
+input[type=tel],
+input[type=text],
+input[type=url],
+select,
+textarea {
+  border: 0;
+  border-radius: 0;
+  background: #333;
+  color: #eee;
+  font-size: 12px;
+  border-bottom: 2px solid #666;
+  &:-internal-autofill-selected {
+    background: #333!important;
+    color: #eee!important;;
+  }
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  background-color: darken(#1d1d1d, 10%);
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    background: $color-primary;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+
+  &::-moz-range-thumb {
+    width: 10px;
+    height: 10px;
+    background: $color-initial;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+}
+
+.row {
+  flex-direction: row;
+  .column {
+    padding: 0 1rem;
+  }
+}
+
+#app {
+  display: grid;
+  height: 100%;
+  grid-template-columns: 100%;
+  grid-template-rows: 150px 100px 1fr;
+  form {
+    max-width: 400px;
+    .owner {
+      position: relative;
+      &:after {
+        display: block;
+        content: '/';
+        position: absolute;
+        top: 0;
+        left: 100%;
+        margin-left: -3px;
+        line-height: 38px;
+        color: lighten(#1d1d1d, 50%);
+      }
+    }
+  }
+  .intro {
+    display: none;
+  }
+  &.start {
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-content: center;
+    .intro {
+      display: inline-block;
+      text-align: center;
+      width: 100%;
+    }
+    h1 {
+      font-size: 110px;
+      line-height: 100px;
+      text-align: center;
+      padding-top: 0;
+    }
+    form {
+      margin: 0 auto;
+    }
+  }
+}
+
+#treeview,
+#codeview {
+  overflow: hidden;
+  .column {
+    height: 100%;
+    pre {
+      height: 100%;
+      overflow: auto;
+      margin: 0;
+      background-color: #1d1d1d;
+      border: 0;
+      [data-current-line="true"] {
+        background: $color-primary;
+        color: $color-initial;
+      }
+    }
+  }
+}
+
+#codeview {
+  border-top: 1px solid #000;
+}
+
+#tree {
+  overflow: auto;
+  border-top: 1px solid #000;
+  div {
+    span {
+      cursor: pointer;
+      display: inline-block;
+      padding: 3px 5px;
+      color: lighten(#1d1d1d, 70%);
+      i {
+        color: lighten(#1d1d1d, 50%);
+        margin-right: 10px;
+      }
+      &:hover {
+        color: $color-primary;
+      }
+    }
+    &:nth-child(odd) {
+      background: lighten(#1d1d1d, 3%);
+    }
+  }
+}
+
+.browserbar {
+  align-items: center;
+  justify-content: center;
+  p {
+    margin: 0;
+  }
+}
+
+#notegraph {
+  width: 100%;
+  height: 100%;
+}
+
+#waveform {
+  position: relative;
+  padding: 0;
+}
+
+#waveform-needle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: $color-primary;
+  width: 1px;
+}
+
+#controls {
+  button {
+    vertical-align: top;
+  }
+  .select {
+    display: inline;
+    padding-left: 10px;
+    label {
+      display: inline;
+      font-size: 10px;
+    }
+    select {
+      border-radius: 0;
+      -webkit-appearance: none;
+      -webkit-border-radius: 0px;
+      max-width: 100px;
+    }
+  }
+  .slider {
+    label {
+      display: block;
+      font-size: 10px;
+    }
+    float: left;
+    max-width: 100px;
+    margin-right: 10px;
+    input {
+      width: 100%;
+    }
+  }
+}
+
+.loading-indicator {
+  border: 16px solid $color-quinary;
+  border-top: 16px solid $color-primary;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  margin: 20px auto 0 auto;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (min-width: 40rem) {
+  .row {
+    margin: 0;
+    width: 100%;
+  }
+}
+
+@import "simpleNotifiy.scss";
+
+@font-face {
+  font-family: 'icomoon';
+  src:  url('../fonts/icomoon.eot?jq37dx');
+  src:  url('../fonts/icomoon.eot?jq37dx#iefix') format('embedded-opentype'),
+  url('../fonts/icomoon.ttf?jq37dx') format('truetype'),
+  url('../fonts/icomoon.woff?jq37dx') format('woff'),
+  url('../fonts/icomoon.svg?jq37dx#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-music:before {
+  content: "\e911";
+}
+.icon-stopwatch:before {
+  content: "\e952";
+}
+.icon-enter:before {
+  content: "\ea13";
+}
+.icon-play3:before {
+  content: "\ea1c";
+}
+.icon-stop2:before {
+  content: "\ea1e";
+}
+.icon-eject:before {
+  content: "\ea25";
+}
+.icon-volume-high:before {
+  content: "\ea26";
+}
+.icon-volume-mute2:before {
+  content: "\ea2a";
+}
+.icon-github:before {
+  content: "\eab0";
+}

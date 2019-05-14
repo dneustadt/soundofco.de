@@ -1,0 +1,133 @@
+.simple-notification-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 310px;
+  height: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.simple-notification-wrapper {
+  max-height: 0px;
+
+  /* Animation on creation */
+  -webkit-animation: pushDown 500ms forwards;
+  animation: pushDown 500ms forwards;
+}
+
+.simple-notification {
+  position: relative;
+  color: white; /* Default */
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 15px;
+  padding-right: 20px;
+  width: 300px;
+  opacity: 1;
+  margin-top: 10px;
+  border: 1px solid transparent;
+  font-family: sans-serif;
+
+  /* Animation on creation */
+  -webkit-animation:slideIn 500ms forwards;
+  animation: slideIn 500ms forwards;
+  -webkit-animation-delay: 100ms;
+  animation-delay: 100ms;
+}
+
+.simple-notification .close-notification {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  color: #000;
+  opacity: 0.3;
+  cursor: pointer;
+  &:before, &:after {
+    position: absolute;
+    left: 7.5px;
+    content: ' ';
+    height: 16px;
+    width: 2px;
+    background-color: #333;
+  }
+  &:before {
+    transform: rotate(45deg);
+  }
+  &:after {
+    transform: rotate(-45deg);
+  }
+}
+
+.close-notification:hover {
+  opacity: 0.7;
+}
+
+.simple-notification.warning {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+}
+
+.simple-notification.good {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+
+.simple-notification.danger {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
+.simple-notification.attention {
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+
+/* Outro transition */
+.simple-notification.fade-out {
+  opacity: 0;
+  transition: opacity 500ms ease-in-out;
+  -moz-transition: opacity 500ms ease-in-out;
+  -webkit-transition: opacity 500ms ease-in-out;
+}
+
+
+/* CSS Animations */
+@keyframes slideIn {
+  100% { margin-left: 0px; }
+}
+
+@-webkit-keyframes slideIn {
+  100% { margin-left: 0px; }
+}
+
+@-moz-keyframes slideIn {
+  100% { margin-left: 0px; }
+}
+
+@-o-keyframes slideIn {
+  100% { margin-left: 0px; }
+}
+
+@keyframes pushDown {
+  100% { max-height: 200px; }
+}
+
+@-webkit-keyframes slideIn {
+  100% { max-height: 200px; }
+}
+
+@-moz-keyframes slideIn {
+  100% { max-height: 200px; }
+}
+
+@-o-keyframes slideIn {
+  100% { max-height: 200px; }
+}
