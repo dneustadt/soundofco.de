@@ -1169,6 +1169,10 @@ input[type=range]::-moz-range-thumb {
   color: #ffffff;
 }
 
+.github-corner:focus {
+  color: #1d1d1d;
+}
+
 .github-corner:hover .octo-arm {
   animation: octocat-wave 560ms ease-in-out;
 }

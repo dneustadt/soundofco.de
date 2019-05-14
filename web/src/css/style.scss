@@ -402,6 +402,9 @@ input[type=range] {
   &:hover {
     color: #ffffff;
   }
+  &:focus {
+    color: #1d1d1d;
+  }
 }
 
 .github-corner:hover .octo-arm {
