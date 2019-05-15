@@ -1865,7 +1865,7 @@ var optionKeys = {
                         window.clearInterval(slideTimer);
                     }
                 }, 10);
-            } else if (getOffset() < getScrollTop() - scrollAmount && self.isPlaying) {
+            } else if (currentLine.offsetTop < codeScroll.offsetHeight / 2 - scrollAmount && self.isPlaying) {
                 if (document.getElementById('codescroll')) {
                     document.getElementById('codescroll').scrollTop = 0;
                 }
