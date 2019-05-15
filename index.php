@@ -123,7 +123,7 @@
                 </div>
                 <div class="column column-50"
                      id="waveform">
-                    <canvas id="notegraph" width="1000" height="1000"></canvas>
+                    <canvas id="notegraph" width="1000" height="1000" v-on:click="spectrumClick"></canvas>
                     <div id="waveform-needle"></div>
                 </div>
             </div>

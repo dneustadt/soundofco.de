@@ -232,7 +232,7 @@ var optionKeys = {
                 }
             }, self.noteLength)
         },
-        lineClick: function(event, lineNum) {
+        lineClick: function (event, lineNum) {
             if (this.isPlaying) {
                 event.target.blur();
 
@@ -242,7 +242,22 @@ var optionKeys = {
             this.currentNote = lineNum + 1;
             this.updateQueryString('l', lineNum);
         },
-        moveCursor: function(forceScroll) {
+        spectrumClick: function (event) {
+            var spectrum = event.target,
+                spectrumWidth = spectrum.offsetWidth,
+                spectrumLeft = spectrum.getBoundingClientRect().left,
+                cursorX = event.clientX,
+                xPercent = ((cursorX - spectrumLeft) / spectrumWidth).toFixed(2) * 100;
+
+            if (!this.notes) {
+                return;
+            }
+
+            this.currentNote = (this.notes.length / 100 * xPercent).toFixed(0);
+            this.updateQueryString('l', this.currentNote);
+            this.moveCursor(true);
+        },
+        moveCursor: function (forceScroll) {
             if (this.currentNote === undefined) {
                 return;
             }
