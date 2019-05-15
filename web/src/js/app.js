@@ -149,6 +149,7 @@ var optionKeys = {
                             }
 
                             this.moveCursorToLine(this.currentNote);
+                            this.moveNeedle();
                         });
                     } else {
                         this.isLoading = false;
@@ -268,7 +269,6 @@ var optionKeys = {
 
             var self = this,
                 codeScroll = document.getElementById('codescroll'),
-                waveformNeedle = document.getElementById('waveform-needle'),
                 currentLine = codeScroll.children[self.currentNote],
                 scrollAmount = 50,
                 getOffset = function () {
@@ -301,8 +301,13 @@ var optionKeys = {
                 }
             }
 
-            if (self.notes) {
-                waveformNeedle.style.left = (self.currentNote / self.notes.length * 100).toFixed(1) + '%';
+            self.moveNeedle();
+        },
+        moveNeedle: function () {
+            var waveformNeedle = document.getElementById('waveform-needle');
+
+            if (waveformNeedle && this.notes) {
+                waveformNeedle.style.left = (this.currentNote / this.notes.length * 100).toFixed(1) + '%';
             }
         },
         moveCursorToLine: function (line) {
