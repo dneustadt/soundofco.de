@@ -119,6 +119,7 @@
                         href="#"
                         v-for="(line, index) in code"
                         v-on:click.stop.prevent="lineClick($event, index)"
+                        :class="!line ? 'empty' : ''"
                         :data-current-line="index === currentNote - 1">{{ line }}<br></a></pre>
                 </div>
                 <div class="column column-50"
