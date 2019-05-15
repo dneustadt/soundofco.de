@@ -1886,7 +1886,7 @@ var optionKeys = {
             var codeScroll = document.getElementById('codescroll'),
                 currentLine = codeScroll.children[line];
 
-            codeScroll.scrollTop = currentLine.offsetTop - (codeScroll.offsetWidth / 2);
+            codeScroll.scrollTop = currentLine.offsetTop - codeScroll.offsetTop - (codeScroll.offsetHeight / 2);
         },
         updateQueryString: function (key, value) {
             var baseUrl = [location.protocol, '//', location.host, location.pathname].join(''),
