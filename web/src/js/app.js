@@ -255,7 +255,7 @@ var optionKeys = {
 
             this.currentNote = (this.notes.length / 100 * xPercent).toFixed(0);
             this.updateQueryString('l', this.currentNote);
-            this.moveCursor(true);
+            this.moveCursorToLine(this.currentNote);
         },
         moveCursor: function (forceScroll) {
             if (this.currentNote === undefined) {
@@ -300,6 +300,12 @@ var optionKeys = {
             if (self.notes) {
                 waveformNeedle.style.left = (self.currentNote / self.notes.length * 100).toFixed(1) + '%';
             }
+        },
+        moveCursorToLine: function (line) {
+            var codeScroll = document.getElementById('codescroll'),
+                currentLine = codeScroll.children[line];
+
+            codeScroll.scrollTop = currentLine.offsetTop - (codeScroll.offsetWidth / 2);
         },
         updateQueryString: function (key, value) {
             var baseUrl = [location.protocol, '//', location.host, location.pathname].join(''),
