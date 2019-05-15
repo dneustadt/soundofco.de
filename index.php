@@ -153,14 +153,15 @@
             </svg>
         </a>
         <script type="text/javascript">
-            window.presetOptions = {};
-            <?php if (!empty($_GET['o'])): ?>window.presetOptions.owner = '<?= $_GET['o']; ?>';<?php endif; ?>
-            <?php if (!empty($_GET['r'])): ?>window.presetOptions.repo = '<?= $_GET['r']; ?>';<?php endif; ?>
-            <?php if (!empty($_GET['b'])): ?>window.presetOptions.branch = '<?= $_GET['b']; ?>';<?php endif; ?>
-            <?php if (!empty($_GET['p'])): ?>window.presetOptions.path = '<?= $_GET['p']; ?>';<?php endif; ?>
-            <?php if (!empty($_GET['i'])): ?>window.presetOptions.interval = '<?= $_GET['i']; ?>';<?php endif; ?>
-            <?php if (!empty($_GET['n'])): ?>window.presetOptions.noteLength = '<?= $_GET['n']; ?>';<?php endif; ?>
-            <?php if (!empty($_GET['w'])): ?>window.presetOptions.wavetype = '<?= $_GET['w']; ?>';<?php endif; ?>
+            window.presetOptions = <?php echo json_encode(array_filter([
+                'owner' => $_GET['o'] ?? null,
+                'repo' => $_GET['r'] ?? null,
+                'branch' => $_GET['b'] ?? null,
+                'path' => $_GET['p'] ?? null,
+                'interval' => $_GET['i'] ?? null,
+                'noteLength' => $_GET['n'] ?? null,
+                'wavetype' => $_GET['w'] ?? null,
+            ], 'strlen'))?>;
         </script>
         <script type="text/javascript" src="web/js/scripts.min.js"></script>
     </body>
