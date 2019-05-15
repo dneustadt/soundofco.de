@@ -115,9 +115,11 @@
                  id="codeview"
                  v-if="code && notes && !isLoading">
                 <div class="column column-50">
-                    <pre id="codescroll"><span
+                    <pre id="codescroll"><a
+                        href="#"
                         v-for="(line, index) in code"
-                        :data-current-line="index === currentNote - 1 && isPlaying">{{ line }}<br></span></pre>
+                        v-on:click.stop.prevent="lineClick(index)"
+                        :data-current-line="index === currentNote - 1">{{ line }}<br></a></pre>
                 </div>
                 <div class="column column-50"
                      id="waveform">
@@ -161,6 +163,7 @@
             <?php if (!empty($_GET['i']) && (int) $_GET['i'] >= 0 && (int) $_GET['i'] <= 1000): ?>window.presetOptions.interval = <?= (int) $_GET['i']; ?>;<?php endif; ?>
             <?php if (!empty($_GET['n']) && (int) $_GET['n'] >= 50 && (int) $_GET['n'] <= 1000): ?>window.presetOptions.noteLength = <?= (int) $_GET['n']; ?>;<?php endif; ?>
             <?php if (!empty($_GET['w']) && in_array($_GET['w'], ['sine', 'sawtooth', 'triangle'])): ?>window.presetOptions.wavetype = '<?= $_GET['w']; ?>';<?php endif; ?>
+            <?php if (!empty($_GET['l'])): ?>window.presetOptions.currentNote = <?= (int) $_GET['l'] + 1; ?>;<?php endif; ?>
         </script>
         <script type="text/javascript" src="web/js/scripts.min.js"></script>
     </body>

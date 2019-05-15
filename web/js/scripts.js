@@ -1575,7 +1575,8 @@ var optionKeys = {
         p: 'path',
         i: 'interval',
         n: 'noteLength',
-        w: 'wavetype'
+        w: 'wavetype',
+        l: 'currentNote'
     },
     defaultOptions = {
         owner: undefined,
@@ -1601,34 +1602,7 @@ var optionKeys = {
     data: Object.assign(Object.assign({}, defaultOptions), window.presetOptions),
     watch: {
         currentNote: function () {
-            if (this.currentNote === undefined) {
-                return;
-            }
-
-            var self = this,
-                codeScroll = document.getElementById('codescroll'),
-                waveformNeedle = document.getElementById('waveform-needle'),
-                currentLine = codeScroll.children[self.currentNote];
-
-            if (currentLine === undefined) {
-                return;
-            }
-
-            if (currentLine.offsetTop - codeScroll.offsetTop >= codeScroll.offsetHeight / 2 + codeScroll.scrollTop) {
-                var slideTimer = setInterval(function () {
-                        codeScroll.scrollTop += 10;
-
-                        var scrollAmount = 50,
-                            offsetTop = currentLine.offsetTop - codeScroll.offsetTop,
-                            scrollTop = codeScroll.offsetHeight / 2 + codeScroll.scrollTop - scrollAmount;
-
-                        if (offsetTop < scrollTop || !self.isPlaying) {
-                            window.clearInterval(slideTimer);
-                        }
-                    }, 10);
-            }
-
-            waveformNeedle.style.left = (this.currentNote / this.notes.length * 100).toFixed(1) + '%';
+            this.moveCursor();
         },
         owner: function () {
             this.updateQueryString('o', this.owner);
@@ -1739,6 +1713,12 @@ var optionKeys = {
                                     );
                                 }
                             }
+
+                            if (!this.currentNote) {
+                                return;
+                            }
+
+                            this.moveCursor(true);
                         });
                     } else {
                         this.isLoading = false;
@@ -1750,6 +1730,8 @@ var optionKeys = {
             if (this.isPlaying) {
                 this.currentNote = this.notes.length;
                 this.isPlaying = false;
+            } else {
+                this.currentNote = 0;
             }
 
             if (event && this.tree === undefined && this.owner && this.repo) {
@@ -1766,11 +1748,14 @@ var optionKeys = {
             this.interval = defaultOptions.interval;
             this.noteLength = defaultOptions.noteLength;
             this.wavetype = defaultOptions.wavetype;
+            this.removeQueryString('l');
         },
         play: function () {
-            document.getElementById('codescroll').scrollTop = 0;
-            document.getElementById('waveform-needle').style.left = '';
-            this.currentNote = 0;
+            if (this.isPlaying) {
+                this.currentNote = this.notes.length;
+                this.isPlaying = false;
+            }
+
             this.oscillator = this.audioContext.createOscillator();
             this.gain = this.audioContext.createGain();
             this.gain.gain.value = 0;
@@ -1813,11 +1798,57 @@ var optionKeys = {
                 } else {
                     self.oscillator.stop();
                     self.isPlaying = false;
-                    if (document.getElementById('waveform-needle')) {
-                        document.getElementById('waveform-needle').style.left = '';
-                    }
+                    self.currentNote = 0;
                 }
             }, self.noteLength)
+        },
+        lineClick: function(lineNum) {
+            this.currentNote = lineNum + 1;
+            this.updateQueryString('l', lineNum);
+        },
+        moveCursor: function(forceScroll) {
+            if (this.currentNote === undefined) {
+                return;
+            }
+
+            var self = this,
+                codeScroll = document.getElementById('codescroll'),
+                waveformNeedle = document.getElementById('waveform-needle'),
+                currentLine = codeScroll.children[self.currentNote],
+                scrollAmount = 50,
+                getOffset = function () {
+                    return currentLine.offsetTop - codeScroll.offsetTop
+                },
+                getScrollTop = function () {
+                    return codeScroll.offsetHeight / 2 + codeScroll.scrollTop;
+                },
+                isScrollBottom = function () {
+                    return codeScroll.scrollTop === (codeScroll.scrollHeight - codeScroll.offsetHeight);
+                };
+
+            if (currentLine === undefined) {
+                return;
+            }
+
+            if (getOffset() >= getScrollTop()) {
+                var slideTimer = setInterval(function () {
+                    var clearInterval = forceScroll ? false : !self.isPlaying;
+
+                    codeScroll.scrollTop += 10;
+
+                    if (getOffset() < getScrollTop() - scrollAmount || isScrollBottom() || clearInterval) {
+                        window.clearInterval(slideTimer);
+                    }
+                }, 10);
+            } else if (getOffset() < getScrollTop() - scrollAmount && self.isPlaying) {
+                if (document.getElementById('codescroll')) {
+                    document.getElementById('codescroll').scrollTop = 0;
+                }
+            }
+
+            if (self.notes) {
+                waveformNeedle.style.left = (self.currentNote / self.notes.length * 100).toFixed(1) + '%';
+            }
         },
         updateQueryString: function (key, value) {
             var baseUrl = [location.protocol, '//', location.host, location.pathname].join(''),
@@ -1840,6 +1871,20 @@ var optionKeys = {
                 }
             }
             window.history.replaceState({}, '', baseUrl + params);
+        },
+        removeQueryString: function (param) {
+            var baseUrl = [location.protocol, '//', location.host, location.pathname].join(''),
+                urlQueryString = document.location.search,
+                prefix = encodeURIComponent(param) + '=',
+                pars = urlQueryString.split(/[&;]/g);
+
+            for (var i = pars.length; i-- > 0;) {
+                if (pars[i].lastIndexOf(prefix, 0) !== -1) {
+                    pars.splice(i, 1);
+                }
+            }
+
+            window.history.replaceState({}, '', baseUrl + (pars.length > 0 ? pars.join('&') : ''));
         }
     }
 });

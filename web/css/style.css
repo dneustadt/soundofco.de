@@ -819,6 +819,15 @@ input[type=range]::-moz-range-thumb {
   border-top: 1px solid #000;
 }
 
+#codescroll a {
+  color: #eeeeee;
+}
+
+#codescroll a:focus {
+  background: #d93c33;
+  color: #fff;
+}
+
 #tree {
   overflow-y: auto;
   overflow-x: hidden;

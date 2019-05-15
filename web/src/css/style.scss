@@ -223,6 +223,16 @@ input[type=range] {
   border-top: 1px solid #000;
 }
 
+#codescroll {
+  a {
+    color: #eeeeee;
+    &:focus {
+      background: $color-primary;
+      color: $color-initial;
+    }
+  }
+}
+
 #tree {
   overflow-y: auto;
   overflow-x: hidden;
