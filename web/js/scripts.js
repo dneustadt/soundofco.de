@@ -1718,7 +1718,7 @@ var optionKeys = {
                                 return;
                             }
 
-                            this.moveCursor(true);
+                            this.moveCursorToLine(this.currentNote);
                         });
                     } else {
                         this.isLoading = false;
@@ -1823,9 +1823,13 @@ var optionKeys = {
                 return;
             }
 
-            this.currentNote = (this.notes.length / 100 * xPercent).toFixed(0);
-            this.updateQueryString('l', this.currentNote);
-            this.moveCursorToLine(this.currentNote);
+            var newNote = (this.notes.length / 100 * xPercent).toFixed(0);
+
+            if (newNote < this.notes.length) {
+                this.currentNote = newNote;
+                this.updateQueryString('l', this.currentNote);
+                this.moveCursorToLine(this.currentNote);
+            }
         },
         moveCursor: function (forceScroll) {
             if (this.currentNote === undefined) {
