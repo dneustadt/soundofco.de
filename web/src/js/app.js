@@ -232,7 +232,13 @@ var optionKeys = {
                 }
             }, self.noteLength)
         },
-        lineClick: function(lineNum) {
+        lineClick: function(event, lineNum) {
+            if (this.isPlaying) {
+                event.target.blur();
+
+                return;
+            }
+
             this.currentNote = lineNum + 1;
             this.updateQueryString('l', lineNum);
         },

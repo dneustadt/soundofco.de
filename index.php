@@ -118,7 +118,7 @@
                     <pre id="codescroll"><a
                         href="#"
                         v-for="(line, index) in code"
-                        v-on:click.stop.prevent="lineClick(index)"
+                        v-on:click.stop.prevent="lineClick($event, index)"
                         :data-current-line="index === currentNote - 1">{{ line }}<br></a></pre>
                 </div>
                 <div class="column column-50"
