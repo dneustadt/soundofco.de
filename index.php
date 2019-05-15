@@ -161,7 +161,7 @@
                 'interval' => $_GET['i'] ?? null,
                 'noteLength' => $_GET['n'] ?? null,
                 'wavetype' => $_GET['w'] ?? null,
-            ], 'strlen'))?>;
+            ], 'strlen'), JSON_FORCE_OBJECT)?>;
         </script>
         <script type="text/javascript" src="web/js/scripts.min.js"></script>
     </body>
