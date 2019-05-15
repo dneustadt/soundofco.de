@@ -183,9 +183,9 @@ var optionKeys = {
         },
         play: function () {
             if (this.isPlaying) {
-                this.currentNote = this.notes.length;
-                this.isPlaying = false;
+                return;
             }
+            this.isPlaying = true;
 
             this.oscillator = this.audioContext.createOscillator();
             this.gain = this.audioContext.createGain();
@@ -194,13 +194,15 @@ var optionKeys = {
             this.oscillator.type = this.wavetype;
             this.gain.connect(this.audioContext.destination)
             this.oscillator.start(0);
-            this.isPlaying = true;
             this.playTune();
         },
         stop: function () {
+            if (!this.isPlaying) {
+                return;
+            }
+
             this.currentNote = this.notes.length;
             document.getElementById('waveform-needle').style.left = '';
-            this.isPlaying = false;
         },
         noteInterval: function () {
             var self = this;
