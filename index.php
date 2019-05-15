@@ -154,12 +154,12 @@
         </a>
         <script type="text/javascript">
             window.presetOptions = {};
-            <?php if (!empty($_GET['o'])): ?>window.presetOptions.owner = '<?= addslashes($_GET['o']); ?>';<?php endif; ?>
-            <?php if (!empty($_GET['r'])): ?>window.presetOptions.repo = '<?= addslashes($_GET['r']); ?>';<?php endif; ?>
-            <?php if (!empty($_GET['b'])): ?>window.presetOptions.branch = '<?= addslashes($_GET['b']); ?>';<?php endif; ?>
-            <?php if (!empty($_GET['p'])): ?>window.presetOptions.path = '<?= addslashes($_GET['p']); ?>';<?php endif; ?>
-            <?php if (!empty($_GET['i'])): ?>window.presetOptions.interval = '<?= (int) $_GET['i']; ?>';<?php endif; ?>
-            <?php if (!empty($_GET['n'])): ?>window.presetOptions.noteLength = '<?= (int) $_GET['n']; ?>';<?php endif; ?>
+            <?php if (!empty($_GET['o'])): ?>window.presetOptions.owner = <?= json_encode((string) $_GET['o']); ?>;<?php endif; ?>
+            <?php if (!empty($_GET['r'])): ?>window.presetOptions.repo = <?= json_encode((string) $_GET['r']); ?>;<?php endif; ?>
+            <?php if (!empty($_GET['b'])): ?>window.presetOptions.branch = <?= json_encode((string) $_GET['b']); ?>;<?php endif; ?>
+            <?php if (!empty($_GET['p'])): ?>window.presetOptions.path = <?= json_encode((string) $_GET['p']); ?>;<?php endif; ?>
+            <?php if (!empty($_GET['i']) && (int) $_GET['i'] >= 0 && (int) $_GET['i'] <= 1000): ?>window.presetOptions.interval = <?= (int) $_GET['i']; ?>;<?php endif; ?>
+            <?php if (!empty($_GET['n']) && (int) $_GET['i'] >= 50 && (int) $_GET['i'] <= 1000): ?>window.presetOptions.noteLength = <?= (int) $_GET['n']; ?>;<?php endif; ?>
             <?php if (!empty($_GET['w']) && in_array($_GET['w'], ['sine', 'sawtooth', 'triangle'])): ?>window.presetOptions.wavetype = '<?= $_GET['w']; ?>';<?php endif; ?>
         </script>
         <script type="text/javascript" src="web/js/scripts.min.js"></script>
